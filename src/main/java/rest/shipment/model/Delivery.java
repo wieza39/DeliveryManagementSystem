@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,7 +35,8 @@ public class Delivery {
     @Column(name = "ETA")
     private LocalDate estimatedDeliveryTime;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "delivery")
-    private List<Parcel> parcelList;
+    @OneToMany(mappedBy = "delivery")
+ //   @JoinColumn(name = "delivery_id")
+    private List<Parcel> parcelList = new ArrayList<>();
 
 }

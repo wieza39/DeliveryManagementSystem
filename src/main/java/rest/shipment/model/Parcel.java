@@ -3,6 +3,9 @@ package rest.shipment.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDate;
 
 @Entity
 @AllArgsConstructor
@@ -25,7 +28,11 @@ public class Parcel {
     @Column(name = "City")
     private String city;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "Order date")
+    @CreationTimestamp
+    private LocalDate orderDate;
+
+    @ManyToOne
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
