@@ -10,6 +10,7 @@ import rest.shipment.repository.DeliveryRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +29,8 @@ public class DeliveryService {
 
         delivery.setDeliveryStatus(DeliveryStatus.PREPARED);
         delivery.setDeliveryVolume(DeliveryVolume.SMALL); //To narazie na sztywno
-        delivery.setParcelList(setDeliveryList(city));
+        delivery.setParcelList(prepareDeliveryList(city));
+
 //TO-DO      update ETA based on parcel.orderDate
 
         deliveryRepository.save(delivery);
@@ -37,12 +39,9 @@ public class DeliveryService {
     public List<Delivery> getAllDeliveries() { return deliveryRepository.findAll(); }
 
 
-    public List<Parcel> setDeliveryList(String city) {
-        List<Parcel> parcelList = parcelService.getAllParcels();
-        List<Parcel> finalList = parcelList.stream()
-                .filter(p -> p.getCity() == city)
-                .collect(Collectors.toList());
-        return finalList;
+    public List<Parcel> prepareDeliveryList(String city) {
+        List<Parcel> parcelList = parcelService.getParcelsByCity(city);
+        return parcelList;
     }
 
 }

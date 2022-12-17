@@ -22,7 +22,7 @@ public class DeliveryController {
     @PostMapping("/new/{city}")
     public void newDeliveryOrder(@PathVariable String city) {
         deliveryService.createDeliveryOrderForCityReference(city);
-     //   parcelService.updateRecords(city);
+        parcelService.updateParcelList(city);
     }
 
     @GetMapping

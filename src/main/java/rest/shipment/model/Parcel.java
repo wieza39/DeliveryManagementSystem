@@ -36,6 +36,13 @@ public class Parcel {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
+
+//    public void setDelivery(Delivery delivery) {
+//        this.delivery = delivery;
+//        if(!delivery.getParcelList().contains(this)) {
+//            delivery.getParcelList().add(this);
+//        }
+//    }
     public Parcel() {}
 
 }

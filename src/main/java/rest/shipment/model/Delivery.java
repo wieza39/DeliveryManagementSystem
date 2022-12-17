@@ -35,8 +35,14 @@ public class Delivery {
     @Column(name = "ETA")
     private LocalDate estimatedDeliveryTime;
 
-    @OneToMany(mappedBy = "delivery")
- //   @JoinColumn(name = "delivery_id")
+    @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Parcel.class)
     private List<Parcel> parcelList = new ArrayList<>();
 
+
+//    public void addParcel(Parcel parcel) {
+//        this.parcelList.add(parcel);
+//        if(parcel.getDelivery()!=this) {
+//            parcel.setDelivery(this);
+//        }
+//    }
 }

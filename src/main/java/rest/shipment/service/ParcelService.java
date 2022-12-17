@@ -3,6 +3,7 @@ package rest.shipment.service;
 import org.springframework.stereotype.Service;
 import rest.shipment.model.Delivery;
 import rest.shipment.model.Parcel;
+import rest.shipment.repository.DeliveryRepository;
 import rest.shipment.repository.ParcelRepository;
 
 import java.util.ArrayList;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 public class ParcelService {
 
     private final ParcelRepository parcelRepository;
+    private final DeliveryRepository deliveryRepository;
 
-    public ParcelService(ParcelRepository parcelRepository) {
+    public ParcelService(ParcelRepository parcelRepository, DeliveryRepository deliveryRepository) {
         this.parcelRepository = parcelRepository;
+        this.deliveryRepository = deliveryRepository;
     }
 
     public void addNewParcel(Parcel parcel) {
@@ -27,17 +30,18 @@ public class ParcelService {
         parcelRepository.save(parcel);
     }
 
-//    public void updateRecords(String city) {
-//        List<Delivery> currentDeliveries = deliveryService.getAllDeliveries();
-//        List<Parcel> parcelsToBeUpdate = currentDeliveries.stream()
-//                .filter(d -> d.getParcelList()
-//                        .stream()
-//                        .filter(s -> s.getCity() == city).forEach((Parcel p) -> {
-//                            p.setDelivery(d.getId());
-//                        });
-//    }
+    public void updateParcelList(String city) {
+        List<Delivery> deliveryList = deliveryRepository.findAll();
+
+        for (Delivery deliver : deliveryList) {
+            deliver.getParcelList().stream().filter(parcel -> parcel.getCity() == city).forEach(parcel -> {
+            parcel.setDelivery(deliver);
+            });}
+    }
+
 
     public List<Parcel> getAllParcels() { return  parcelRepository.findAll(); }
+    public List<Parcel> getParcelsByCity(String city) { return parcelRepository.findParcelByCity(city); }
 
 
 
