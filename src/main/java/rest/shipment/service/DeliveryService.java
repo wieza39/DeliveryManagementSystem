@@ -7,11 +7,7 @@ import rest.shipment.model.DeliveryVolume;
 import rest.shipment.model.Parcel;
 import rest.shipment.repository.DeliveryRepository;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class DeliveryService {
@@ -30,7 +26,7 @@ public class DeliveryService {
         delivery.setDeliveryStatus(DeliveryStatus.PREPARED);
         delivery.setDeliveryVolume(DeliveryVolume.SMALL); //To narazie na sztywno
         delivery.setParcelList(prepareDeliveryList(city));
-
+        parcelService.updateParcelList(city, delivery);
 //TO-DO      update ETA based on parcel.orderDate
 
         deliveryRepository.save(delivery);

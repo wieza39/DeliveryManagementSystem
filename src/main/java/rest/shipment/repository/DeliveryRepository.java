@@ -7,4 +7,5 @@ import rest.shipment.model.Delivery;
 @Repository
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
 
+
 }

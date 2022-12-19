@@ -1,6 +1,8 @@
 package rest.shipment.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -32,17 +34,12 @@ public class Parcel {
     @CreationTimestamp
     private LocalDate orderDate;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
 
-//    public void setDelivery(Delivery delivery) {
-//        this.delivery = delivery;
-//        if(!delivery.getParcelList().contains(this)) {
-//            delivery.getParcelList().add(this);
-//        }
-//    }
     public Parcel() {}
 
 }

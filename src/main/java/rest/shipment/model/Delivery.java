@@ -1,5 +1,6 @@
 package rest.shipment.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,14 +36,8 @@ public class Delivery {
     @Column(name = "ETA")
     private LocalDate estimatedDeliveryTime;
 
-    @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Parcel.class)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Parcel> parcelList = new ArrayList<>();
 
-
-//    public void addParcel(Parcel parcel) {
-//        this.parcelList.add(parcel);
-//        if(parcel.getDelivery()!=this) {
-//            parcel.setDelivery(this);
-//        }
-//    }
 }
